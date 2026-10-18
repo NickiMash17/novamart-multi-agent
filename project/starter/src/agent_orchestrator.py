@@ -671,7 +671,7 @@ Workflow (follow strictly):
 1. FIRST call initialize_session(session_id, customer_id).
 2. If the request is about order status, returns, or refunds: call route_to_inventory_agent, then route_to_refund_agent.
 3. If the request is a policy question: call route_to_policy_agent.
-4. If the request is a general or math question: you do NOT need to call inventory, policy, or refund.
+4. If the request is a math calculation: Skip Inventory, Policy, and Refund. Go straight to Communication.
 5. ALWAYS call route_to_communication_agent as your FINAL step to compose the response.
 6. Reply with exactly the text the communication agent returned. Add nothing else."""
 
@@ -1081,6 +1081,7 @@ def configure_observability(runtime_arn: str) -> None:
         print("  X-Ray sampling rate  : 1.0 (100%)")
     except Exception as e:
         print(f"  [Error] Logging config failed: {e}")
+        raise
 
 
 # ═══════════════════════════════════════════════════════
